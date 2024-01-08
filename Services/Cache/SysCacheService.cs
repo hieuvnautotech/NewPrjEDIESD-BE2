@@ -1,14 +1,15 @@
 ﻿using Microsoft.Extensions.Options;
-using NewPrjESDEDIBE.Cache;
+//using NewPrjESDEDIBE.Cache;
 using NewPrjESDEDIBE.Extensions;
 using NewPrjESDEDIBE.Models.Dtos.Common;
 using NewPrjESDEDIBE.Services.Common;
 using static NewPrjESDEDIBE.Extensions.ServiceExtensions;
-using NewPrjESDEDIBE.Services.EDI;
+//using NewPrjESDEDIBE.Services.EDI;
 using NewPrjESDEDIBE.Models.Dtos;
 using FluentValidation.TestHelper;
 using NewPrjESDEDIBE.Models.Dtos.Redis;
-using NewPrjESDEDIBE.Models.Redis;
+using NewPrjESDEDIBE.Cache;
+//using NewPrjESDEDIBE.Models.Redis;
 
 namespace NewPrjESDEDIBE.Services.Cache
 {
@@ -46,13 +47,13 @@ namespace NewPrjESDEDIBE.Services.Cache
         /// <summary>
         /// Policies
         /// </summary>
-        Task<List<PPORTAL_QUAL02_POLICY_Redis>> GetPoliciesFromRedis();
+        //Task<List<PPORTAL_QUAL02_POLICY_Redis>> GetPoliciesFromRedis();
 
         Task SetPoliciesToRedis();
 
-        Task SetPoliciesToRedis(PPORTAL_QUAL02_POLICY_Redis model);
+        //Task SetPoliciesToRedis(PPORTAL_QUAL02_POLICY_Redis model);
 
-        Task RemovePoliciesFromRedis(PPORTAL_QUAL02_POLICYDto model);
+        //Task RemovePoliciesFromRedis(PPORTAL_QUAL02_POLICYDto model);
 
         /// <summary>
         /// Available Tokens
@@ -101,20 +102,20 @@ namespace NewPrjESDEDIBE.Services.Cache
     {
         private readonly ICache _cache;
         // private readonly ILoginService _loginService;
-        private readonly IPolicyService _policyService;
+        //private readonly IPolicyService _policyService;
         private readonly IRefreshTokenService _refreshTokenService;
         private readonly IRoleService _roleService;
         public SysCacheService(
             ICache cache
             // , ILoginService loginService
-            , IPolicyService policyService
+            //, IPolicyService policyService
             , IRefreshTokenService refreshTokenService
             , IRoleService roleService
             )
         {
             _cache = cache;
             // _loginService = loginService;
-            _policyService = policyService;
+            //_policyService = policyService;
             _refreshTokenService = refreshTokenService;
             _roleService = roleService;
         }
@@ -222,69 +223,69 @@ namespace NewPrjESDEDIBE.Services.Cache
         public async Task SetPoliciesToRedis()
         {
             var cacheKey = CommonConst.CACHE_KEY_POLICIES;
-            var data = await _policyService.GetForCache();
+            //var data = await _policyService.GetForCache();
 
-            await _cache.SetAsync(cacheKey, data.Data);
+            //await _cache.SetAsync(cacheKey, data.Data);
         }
 
-        private async Task SetPoliciesToRedis(List<PPORTAL_QUAL02_POLICY_Redis?> data)
-        {
-            var cacheKey = CommonConst.CACHE_KEY_POLICIES;
-            try
-            {
-                await _cache.SetAsync(cacheKey, data);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            //await _cache.SetAsync(cacheKey, data);
-        }
+        //private async Task SetPoliciesToRedis(List<PPORTAL_QUAL02_POLICY_Redis?> data)
+        //{
+        //    var cacheKey = CommonConst.CACHE_KEY_POLICIES;
+        //    try
+        //    {
+        //        await _cache.SetAsync(cacheKey, data);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw;
+        //    }
+        //    //await _cache.SetAsync(cacheKey, data);
+        //}
 
-        public async Task SetPoliciesToRedis(PPORTAL_QUAL02_POLICY_Redis model)
-        {
-            var policies = await GetPoliciesFromRedis();
-            var index = policies.FindIndex(x => x.Id == model.Id);
-            if (index == -1) policies.Add(model);
-            else policies[index] = model;
-            await SetPoliciesToRedis(policies);
-        }
+        //public async Task SetPoliciesToRedis(PPORTAL_QUAL02_POLICY_Redis model)
+        //{
+        //    var policies = await GetPoliciesFromRedis();
+        //    var index = policies.FindIndex(x => x.Id == model.Id);
+        //    if (index == -1) policies.Add(model);
+        //    else policies[index] = model;
+        //    await SetPoliciesToRedis(policies);
+        //}
 
-        public async Task<List<PPORTAL_QUAL02_POLICY_Redis>> GetPoliciesFromRedis()
-        {
-            try
-            {
-                var cacheKey = CommonConst.CACHE_KEY_POLICIES;
-                var data = await _cache.GetOrCreateAsync(cacheKey, async () =>
-                {
-                    var data = await _policyService.GetForCache();
-                    var policies = data.Data.ToList();
-                    await SetPoliciesToRedis(policies);
-                    return policies;
-                });
-                return data;
-            }
-            catch (Exception ex)
-            {
+        //public async Task<List<PPORTAL_QUAL02_POLICY_Redis>> GetPoliciesFromRedis()
+        //{
+        //    try
+        //    {
+        //        var cacheKey = CommonConst.CACHE_KEY_POLICIES;
+        //        var data = await _cache.GetOrCreateAsync(cacheKey, async () =>
+        //        {
+        //            var data = await _policyService.GetForCache();
+        //            var policies = data.Data.ToList();
+        //            await SetPoliciesToRedis(policies);
+        //            return policies;
+        //        });
+        //        return data;
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                throw;
-            }
-        }
+        //        throw;
+        //    }
+        //}
 
-        public async Task RemovePoliciesFromRedis(PPORTAL_QUAL02_POLICYDto model)
-        {
-            try
-            {
-                var policies = await GetPoliciesFromRedis();
-                policies.RemoveAll(item => item.Id == model.Id);
-                await SetPoliciesToRedis(policies);
-            }
-            catch (Exception ex)
-            {
+        //public async Task RemovePoliciesFromRedis(PPORTAL_QUAL02_POLICYDto model)
+        //{
+        //    try
+        //    {
+        //        var policies = await GetPoliciesFromRedis();
+        //        policies.RemoveAll(item => item.Id == model.Id);
+        //        await SetPoliciesToRedis(policies);
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                throw;
-            }
-        }
+        //        throw;
+        //    }
+        //}
 
         /// <summary>
         /// Available Tokens
