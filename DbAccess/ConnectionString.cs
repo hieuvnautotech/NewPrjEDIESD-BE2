@@ -2,7 +2,7 @@
 {
     public static class ConnectionString
     {
-        // public const string CONNECTIONSTRING = $"data source=118.69.130.73,1435;initial catalog=ESD_EDI;persist security info=True;user id=sa;password=YFemGoN1mCoYP7hrfUY5Re5z1YIe0hVG2R76R4pj5O7k2YQnM3;MultipleActiveResultSets=True;";
+        public const string CONNECTIONSTRING = $"data source=118.69.130.73,1435;initial catalog=ESD_EDI;persist security info=True;user id=sa;password=YFemGoN1mCoYP7hrfUY5Re5z1YIe0hVG2R76R4pj5O7k2YQnM3;MultipleActiveResultSets=True;";
 
         // public const string CONNECTIONSTRING = $"data source=192.168.2.19,1433;initial catalog=ESD_EDI;persist security info=True;user id=sa;password=Ixo5zHG51H6QBJsVre7BC4mjdTLcy18jdBzs90CCcfKAdcMusR;MultipleActiveResultSets=True;";
 
