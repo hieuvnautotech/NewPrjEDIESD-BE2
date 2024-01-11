@@ -34,10 +34,10 @@ using Microsoft.Extensions.Options;
 using Hangfire;
 using Hangfire.Dashboard;
 using NewPrjESDEDIBE.CustomAttributes;
-using NewPrjESDEDIBE.Hangfire.Services;
-using NewPrjESDEDIBE.Hangfire.Database;
-using NewPrjESDEDIBE.ElasticSearch.Services;
-using NewPrjESDEDIBE.ElasticSearch.Host;
+//using NewPrjESDEDIBE.Hangfire.Services;
+//using NewPrjESDEDIBE.Hangfire.Database;
+//using NewPrjESDEDIBE.ElasticSearch.Services;
+//using NewPrjESDEDIBE.ElasticSearch.Host;
 using NewPrjESDEDIBE.Cache;
 using NewPrjESDEDIBE.Connection;
 using NewPrjESDEDIBE.Extensions;
@@ -203,13 +203,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 
 builder.Services.Configure<ConnectionModel>(builder.Configuration.GetSection("ConnectionStrings"));
-builder.Services.Configure<WatcherDirectory>(builder.Configuration.GetSection("WatcherFolder"));
+//builder.Services.Configure<WatcherDirectory>(builder.Configuration.GetSection("WatcherFolder"));
 builder.Services.Configure<RabbitMqConfiguration>(builder.Configuration.GetSection("RabbitMQ"));
 builder.Services.Configure<AutonsiRabbitMqConfiguration>(builder.Configuration.GetSection("AutonsiRabbitMQ"));
 
 builder.Services.AddMemoryCache();
 builder.Services.AddHostedService<InitializeCacheService>();
-builder.Services.AddHostedService<InitializeElasticSearchService>();
+//builder.Services.AddHostedService<InitializeElasticSearchService>();
 // builder.Services.AddHostedService<FileWatcherService>();
 builder.Services.AddHostedService<ConsumerHostedService>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -249,10 +249,10 @@ builder.Services.AddSingleton<ICache, RedisCache>();
 // builder.Services.AddSingleton<SubscribeAppTableDependency>();
 // builder.Services.AddSingleton<SubscribeMenuTableDependency>();
 
-builder.Services.AddDbContext<ESD_DBContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ESD_ConnectionStr")), ServiceLifetime.Singleton);
-builder.Services.AddDbContext<HangfireAutonsiContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("AUTONSI_ConnectionStr")), ServiceLifetime.Singleton);
+//builder.Services.AddDbContext<ESD_DBContext>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("ESD_ConnectionStr")), ServiceLifetime.Singleton);
+//builder.Services.AddDbContext<HangfireAutonsiContext>(options =>
+//options.UseSqlServer(builder.Configuration.GetConnectionString("AUTONSI_ConnectionStr")), ServiceLifetime.Singleton);
 
 builder.Services.AddFluentValidationAutoValidation(config =>
 {
@@ -292,11 +292,11 @@ app.UseRouting();
 //    FileProvider = new PhysicalFileProvider(path)
 //});
 
-var options = new DashboardOptions
-{
-    Authorization = new[] { new HangfireAuthorizationFilter() }
-};
-app.UseHangfireDashboard("/hangfire", options);
+//var options = new DashboardOptions
+//{
+//    Authorization = new[] { new HangfireAuthorizationFilter() }
+//};
+//app.UseHangfireDashboard("/hangfire", options);
 
 app.UseAuthentication();
 
@@ -361,26 +361,26 @@ app.UseStaticFiles(new StaticFileOptions
 
 app.MapControllers();
 
-if (app.Environment.EnvironmentName != CommonConst.DEVELOPMENT)
-{
-    RecurringJob.AddOrUpdate<IHangfireService>(
-   "delete-expired-tokens-job",
-   service => service.DeleteExpiredTokens()
-   , "*/15 * * * *" // At every 15th minute.
-                    //    , "0 0 * * 1-7" // At 00:00 on every day-of-week from Monday through Sunday.
-);
-}
+//if (app.Environment.EnvironmentName != CommonConst.DEVELOPMENT)
+//{
+//    RecurringJob.AddOrUpdate<IHangfireService>(
+//   "delete-expired-tokens-job",
+//   service => service.DeleteExpiredTokens()
+//   , "*/15 * * * *" // At every 15th minute.
+//                    //    , "0 0 * * 1-7" // At 00:00 on every day-of-week from Monday through Sunday.
+//);
+//}
 
-if (app.Environment.EnvironmentName == CommonConst.PRODUCTION)
-{
-    Console.WriteLine("Môi trường thực thi: " + app.Environment.EnvironmentName);
-    RecurringJob.AddOrUpdate<IHangfireService>(
-    "update-user-manual-job",
-    service => service.UpdateDocumentFromAutonsi()
-    , "*/30 * * * *" // At every 30 minute.
-    //    , "0 0 * * 1-7" // At 00:00 on every day-of-week from Monday through Sunday.
-    );
-}
+//if (app.Environment.EnvironmentName == CommonConst.PRODUCTION)
+//{
+//    Console.WriteLine("Môi trường thực thi: " + app.Environment.EnvironmentName);
+//    RecurringJob.AddOrUpdate<IHangfireService>(
+//    "update-user-manual-job",
+//    service => service.UpdateDocumentFromAutonsi()
+//    , "*/30 * * * *" // At every 30 minute.
+//    //    , "0 0 * * 1-7" // At 00:00 on every day-of-week from Monday through Sunday.
+//    );
+//}
 
 
 app.Run();
