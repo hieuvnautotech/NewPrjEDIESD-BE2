@@ -9,7 +9,7 @@ using static NewPrjESDEDIBE.Extensions.ServiceExtensions;
 using Newtonsoft.Json;
 //using NewPrjESDEDIBE.Models.Redis;
 
-namespace ESD_EDI_BE.Services.EDI
+namespace NewPrjESDEDIBE.Services.EDI
 {
     public interface IPolicyService
     {
