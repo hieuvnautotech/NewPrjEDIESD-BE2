@@ -17,9 +17,9 @@ namespace NewPrjESDEDIBE.ElasticSearch.Services
 {
     public interface IElasticSearchService
     {
-        Task IndexMachine(MachineDto machine);
-        Task DeleteMachine(MachineDto machine);
-        Task<List<MachineDto>?> SearchMachines(string searchTerm, bool? isActived);
+        //Task IndexMachine(MachineDto machine);
+        //Task DeleteMachine(MachineDto machine);
+        //Task<List<MachineDto>?> SearchMachines(string searchTerm, bool? isActived);
     }
 
     [SingletonRegistration]
@@ -40,66 +40,66 @@ namespace NewPrjESDEDIBE.ElasticSearch.Services
             _elasticClient = new ElasticClient(elasticsearchUri);
         }
 
-        public async Task DeleteMachine(MachineDto machine)
-        {
-            await _elasticClient.DeleteAsync<MachineDto>(machine.MachineId, d => d
-                .Index("machine")
-            );
-        }
-        public async Task IndexMachine(MachineDto machine)
-        {
-            try
-            {
-                var updateResponse = await _elasticClient.UpdateAsync<MachineDto>(machine.MachineId, u => u
-                            .Index("machine")
-                            .Doc(machine)
-                            .DocAsUpsert(true) // If the document doesn't exist, treat it as an insert
-                        );
-                if (updateResponse.IsValid)
-                {
-                    Console.WriteLine("Update document succeeded.");
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("connect to elastic search: " + e.Message);
-            }
-        }
+        //public async Task DeleteMachine(MachineDto machine)
+        //{
+        //    await _elasticClient.DeleteAsync<MachineDto>(machine.MachineId, d => d
+        //        .Index("machine")
+        //    );
+        //}
+        //public async Task IndexMachine(MachineDto machine)
+        //{
+        //    try
+        //    {
+        //        var updateResponse = await _elasticClient.UpdateAsync<MachineDto>(machine.MachineId, u => u
+        //                    .Index("machine")
+        //                    .Doc(machine)
+        //                    .DocAsUpsert(true) // If the document doesn't exist, treat it as an insert
+        //                );
+        //        if (updateResponse.IsValid)
+        //        {
+        //            Console.WriteLine("Update document succeeded.");
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine("connect to elastic search: " + e.Message);
+        //    }
+        //}
 
-        public async Task<List<MachineDto>?> SearchMachines(string searchTerm, bool? isActived)
-        {
-            //var searchRequest = new SearchRequest("machine")
-            //{
-            //    Query = new TermQuery("machineCode") { Value = searchTerm },
-            //};
+        //public async Task<List<MachineDto>?> SearchMachines(string searchTerm, bool? isActived)
+        //{
+        //    //var searchRequest = new SearchRequest("machine")
+        //    //{
+        //    //    Query = new TermQuery("machineCode") { Value = searchTerm },
+        //    //};
 
-            var searchResponse = await _elasticClient.SearchAsync<MachineDto>(s => s
-                .Index("machine")
-                .Query(q => q
-                    .Bool(b => b
-                        .Must(
-                            m => m
-                            .Term(t => t.isActived, isActived)
-                            , m => m
-                            .MultiMatch(mt => mt
-                                .Fields(fields => fields
-                                    .Field(f => f.MachineCode)
-                                    .Field(f => f.MachineName)
-                                )
-                                .Query(searchTerm)
-                                .Fuzziness(Fuzziness.Auto)
-                            )
-                        )
-                    )
-                )
-            );
+        //    var searchResponse = await _elasticClient.SearchAsync<MachineDto>(s => s
+        //        .Index("machine")
+        //        .Query(q => q
+        //            .Bool(b => b
+        //                .Must(
+        //                    m => m
+        //                    .Term(t => t.isActived, isActived)
+        //                    , m => m
+        //                    .MultiMatch(mt => mt
+        //                        .Fields(fields => fields
+        //                            .Field(f => f.MachineCode)
+        //                            .Field(f => f.MachineName)
+        //                        )
+        //                        .Query(searchTerm)
+        //                        .Fuzziness(Fuzziness.Auto)
+        //                    )
+        //                )
+        //            )
+        //        )
+        //    );
 
-            if (searchResponse.IsValid)
-            {
-                var result = searchResponse.Documents.ToList();
-                return result;
-            }
-            return null;
-        }
+        //    if (searchResponse.IsValid)
+        //    {
+        //        var result = searchResponse.Documents.ToList();
+        //        return result;
+        //    }
+        //    return null;
+        //}
     }
 }

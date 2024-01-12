@@ -75,7 +75,7 @@ namespace NewPrjESDEDIBE.RabbitMQ
                         break;
 
                     case CommonConst.QUEUE_PPORTAL_QUAL02_INFO:
-                        await Save_PPORTAL_QUAL02_INFO(message);
+                        //await Save_PPORTAL_QUAL02_INFO(message);
                         await Task.CompletedTask;
 
                         _model.BasicAck(deliveryTag: ea.DeliveryTag,
@@ -90,39 +90,39 @@ namespace NewPrjESDEDIBE.RabbitMQ
             await Task.CompletedTask;
         }
 
-        private async Task Save_PPORTAL_QUAL02_INFO(string jsonList)
-        {
-            try
-            {
-                var data = JsonConvert.DeserializeObject<List<PPORTAL_QUAL02_INFO>>(jsonList);
+        //private async Task Save_PPORTAL_QUAL02_INFO(string jsonList)
+        //{
+        //    try
+        //    {
+        //        var data = JsonConvert.DeserializeObject<List<PPORTAL_QUAL02_INFO>>(jsonList);
 
-                if (data != null)
-                {
-                    _esdDbContext.AddRange(data);
+        //        if (data != null)
+        //        {
+        //            _esdDbContext.AddRange(data);
 
-                    // Kiểm tra trạng thái trước khi lưu vào cơ sở dữ liệu
-                    if (_esdDbContext.ChangeTracker.HasChanges())
-                    {
-                        await _esdDbContext.SaveChangesAsync();
-                    }
-                }
-            }
-            catch (JsonException jsonException)
-            {
-                // Xử lý lỗi chuyển đổi JSON
-                Console.WriteLine($"Error deserializing JSON: {jsonException.Message}");
-            }
-            catch (DbUpdateException dbUpdateException)
-            {
-                // Xử lý lỗi cơ sở dữ liệu
-                Console.WriteLine($"Database update error: {dbUpdateException.Message}");
-            }
-            catch (Exception ex)
-            {
-                // Xử lý các loại ngoại lệ khác
-                Console.WriteLine($"An unexpected error occurred: {ex.Message}");
-            }
-        }
+        //            // Kiểm tra trạng thái trước khi lưu vào cơ sở dữ liệu
+        //            if (_esdDbContext.ChangeTracker.HasChanges())
+        //            {
+        //                await _esdDbContext.SaveChangesAsync();
+        //            }
+        //        }
+        //    }
+        //    catch (JsonException jsonException)
+        //    {
+        //        // Xử lý lỗi chuyển đổi JSON
+        //        Console.WriteLine($"Error deserializing JSON: {jsonException.Message}");
+        //    }
+        //    catch (DbUpdateException dbUpdateException)
+        //    {
+        //        // Xử lý lỗi cơ sở dữ liệu
+        //        Console.WriteLine($"Database update error: {dbUpdateException.Message}");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Xử lý các loại ngoại lệ khác
+        //        Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+        //    }
+        //}
 
         public void Dispose()
         {

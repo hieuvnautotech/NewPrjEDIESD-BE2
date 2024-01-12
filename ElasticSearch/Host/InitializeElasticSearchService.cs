@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Dapper;
 using NewPrjESDEDIBE.DbAccess;
 using NewPrjESDEDIBE.ElasticSearch.Services;
-using NewPrjESDEDIBE.ElasticSearch.Services.Machine;
+//using NewPrjESDEDIBE.ElasticSearch.Services.Machine;
 using NewPrjESDEDIBE.Extensions;
 using NewPrjESDEDIBE.Models;
 using NewPrjESDEDIBE.Models.Dtos;
@@ -22,12 +22,12 @@ namespace NewPrjESDEDIBE.ElasticSearch.Host
 
         private readonly IServiceProvider _serviceProvider;
         private readonly ESD_DBContext _esdContext;
-        private readonly IES_MachineService _esMachineService;
+        //private readonly IES_MachineService _esMachineService;
         private readonly ISqlDataAccess _sqlDataAccess;
 
         public InitializeElasticSearchService(
             IServiceProvider serviceProvider
-            , IES_MachineService esMachineService
+            //, IES_MachineService esMachineService
             , ESD_DBContext eSD_DBContext
             , ISqlDataAccess sqlDataAccess
 
@@ -35,7 +35,7 @@ namespace NewPrjESDEDIBE.ElasticSearch.Host
         {
             _serviceProvider = serviceProvider;
             _esdContext = eSD_DBContext;
-            _esMachineService = esMachineService;
+            //_esMachineService = esMachineService;
             _sqlDataAccess = sqlDataAccess;
         }
 
@@ -58,13 +58,13 @@ namespace NewPrjESDEDIBE.ElasticSearch.Host
         {
             // Thực hiện lập chỉ mục dữ liệu vào Elasticsearch
             // Ví dụ: Indexing mọi ESDMachine từ cơ sở dữ liệu vào Elasticsearch
-            await _esMachineService.DeleteIndexIfExist("machine");
+            //await _esMachineService.DeleteIndexIfExist("machine");
 
-            var allMachines = await GetAllMachinesFromDatabase();
+            //var allMachines = await GetAllMachinesFromDatabase();
             try
             {
-                if (allMachines.Any())
-                {
+                //if (allMachines.Any())
+                //{
                     // var machines = new HashSet<MachineDto>();
                     // var updateMachines = new HashSet<MachineDto>();
 
@@ -98,8 +98,8 @@ namespace NewPrjESDEDIBE.ElasticSearch.Host
                     //     await _esMachineService.BulkUpdate(updateMachines);
                     // }
 
-                    await _esMachineService.BulkInsert(allMachines);
-                }
+                    //await _esMachineService.BulkInsert(allMachines);
+                //}
             }
             catch (Exception e)
             {
@@ -107,19 +107,19 @@ namespace NewPrjESDEDIBE.ElasticSearch.Host
             }
         }
 
-        private async Task<HashSet<MachineDto>?> GetAllMachinesFromDatabase()
-        {
-            // return await _esdContext.ESDMachine.ToListAsync();
-            var proc = $"Usp_Machine_Get";
-            var param = new DynamicParameters();
-            param.Add("@page", 1);
-            param.Add("@pageSize", int.MaxValue);
-            param.Add("@keyword", null);
-            param.Add("@isActived", null);
-            param.Add("@totalRow", 0, DbType.Int32, ParameterDirection.Output);
-            var data = await _sqlDataAccess.LoadDataUsingStoredProcedure<MachineDto>(proc, param);
+        //private async Task<HashSet<MachineDto>?> GetAllMachinesFromDatabase()
+        //{
+        //    // return await _esdContext.ESDMachine.ToListAsync();
+        //    var proc = $"Usp_Machine_Get";
+        //    var param = new DynamicParameters();
+        //    param.Add("@page", 1);
+        //    param.Add("@pageSize", int.MaxValue);
+        //    param.Add("@keyword", null);
+        //    param.Add("@isActived", null);
+        //    param.Add("@totalRow", 0, DbType.Int32, ParameterDirection.Output);
+        //    var data = await _sqlDataAccess.LoadDataUsingStoredProcedure<MachineDto>(proc, param);
 
-            return data.ToHashSet();
-        }
+        //    return data.ToHashSet();
+        //}
     }
 }

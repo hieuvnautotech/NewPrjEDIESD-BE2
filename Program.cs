@@ -31,8 +31,8 @@ using MiniExcelLibs;
 using NewPrjESDEDIBE.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Hangfire;
-using Hangfire.Dashboard;
+//using Hangfire;
+//using Hangfire.Dashboard;
 using NewPrjESDEDIBE.CustomAttributes;
 //using NewPrjESDEDIBE.Hangfire.Services;
 //using NewPrjESDEDIBE.Hangfire.Database;
@@ -259,13 +259,13 @@ builder.Services.AddFluentValidationAutoValidation(config =>
     config.DisableDataAnnotationsValidation = true;
 });
 
-builder.Services.AddHangfire(configuration => configuration
-       .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
-       .UseSimpleAssemblyNameTypeSerializer()
-       .UseRecommendedSerializerSettings()
-       .UseSqlServerStorage(connectionString));
+//builder.Services.AddHangfire(configuration => configuration
+//       .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+//       .UseSimpleAssemblyNameTypeSerializer()
+//       .UseRecommendedSerializerSettings()
+//       .UseSqlServerStorage(connectionString));
 
-builder.Services.AddHangfireServer();
+//builder.Services.AddHangfireServer();
 
 
 var app = builder.Build();
