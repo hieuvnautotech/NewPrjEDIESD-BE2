@@ -46,7 +46,7 @@ namespace NewPrjESDEDIBE.RabbitMQ
     {
         private readonly RabbitMqConfiguration _configuration;
         private readonly AutonsiRabbitMqConfiguration _autonsiConfiguration;
-        private readonly ESD_DBContext _esdDbContext;
+        //private readonly ESD_DBContext _esdDbContext;
         private readonly ISqlDataAccess _sqlDataAccess;
         private readonly ISysCacheService _sysCacheService;
         private readonly SignalRHub _signalRHub;
@@ -56,7 +56,7 @@ namespace NewPrjESDEDIBE.RabbitMQ
         (
             IOptions<RabbitMqConfiguration> options
             , IOptions<AutonsiRabbitMqConfiguration> autonsiOptions
-            , ESD_DBContext esdDbContext
+            //, ESD_DBContext esdDbContext
             , ISqlDataAccess sqlDataAccess
             , ISysCacheService sysCacheService
             , SignalRHub signalRHub
@@ -65,7 +65,7 @@ namespace NewPrjESDEDIBE.RabbitMQ
         {
             _configuration = options.Value;
             _autonsiConfiguration = autonsiOptions.Value;
-            _esdDbContext = esdDbContext;
+            //_esdDbContext = esdDbContext;
             _sqlDataAccess = sqlDataAccess;
             _sysCacheService = sysCacheService;
             _signalRHub = signalRHub;
@@ -396,10 +396,10 @@ namespace NewPrjESDEDIBE.RabbitMQ
                     switch (data.RabbitMQType)
                     {
                         case CommonConst.RABBITMQ_TYPE_DELETE:
-                            var deleteItem = await _esdDbContext.sysTbl_Document.FirstOrDefaultAsync(x => x.documentId == data.documentId);
-                            data.row_version = deleteItem.row_version;
-                            var result = await DeleteDocument(data);
-                            Console.WriteLine("Delete Document Message: " + result);
+                            //var deleteItem = await _esdDbContext.sysTbl_Document.FirstOrDefaultAsync(x => x.documentId == data.documentId);
+                            //data.row_version = deleteItem.row_version;
+                            //var result = await DeleteDocument(data);
+                            //Console.WriteLine("Delete Document Message: " + result);
                             break;
 
                         default:

@@ -211,7 +211,7 @@ builder.Services.AddMemoryCache();
 builder.Services.AddHostedService<InitializeCacheService>();
 //builder.Services.AddHostedService<InitializeElasticSearchService>();
 // builder.Services.AddHostedService<FileWatcherService>();
-builder.Services.AddHostedService<ConsumerHostedService>();
+//builder.Services.AddHostedService<ConsumerHostedService>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSignalR();
 builder.Services.AddSingleton<SignalRHub>();
@@ -219,28 +219,28 @@ builder.Services.AddSingleton<SignalRHub>();
 /**
 * RabbitMQ
 */
-builder.Services.AddSingleton<IConsumerService>(provider => new ConsumerService(
-    provider.GetRequiredService<IRabbitMqService>()
-    , provider.GetRequiredService<SignalRHub>()
-    , new List<string> {
-        CommonConst.QUEUE_MESSAGE
-        , CommonConst.QUEUE_PPORTAL_QUAL02_INFO
-    }
-    , provider.GetRequiredService<ESD_DBContext>()
-));
+//builder.Services.AddSingleton<IConsumerService>(provider => new ConsumerService(
+//    provider.GetRequiredService<IRabbitMqService>()
+//    , provider.GetRequiredService<SignalRHub>()
+//    , new List<string> {
+//        CommonConst.QUEUE_MESSAGE
+//        , CommonConst.QUEUE_PPORTAL_QUAL02_INFO
+//    }
+//    , provider.GetRequiredService<ESD_DBContext>()
+//));
 
-builder.Services.AddSingleton<IAutonsiConsumerService>(provider => new AutonsiConsumerService(
-    provider.GetRequiredService<IWebHostEnvironment>()
-    , provider.GetRequiredService<IRabbitMqService>()
-    , new List<string> {
-        CommonConst.AUTONSI_QUEUE_MACHINE
-        , CommonConst.AUTONSI_QUEUE_MENU
-        , CommonConst.AUTONSI_QUEUE_MENU_PERMISSION
-        , CommonConst.AUTONSI_QUEUE_DOCUMENT
-    }
-    // , provider.GetRequiredService<ESD_DBContext>()
-    // , provider.GetRequiredService<ISqlDataAccess>()
-));
+//builder.Services.AddSingleton<IAutonsiConsumerService>(provider => new AutonsiConsumerService(
+//    provider.GetRequiredService<IWebHostEnvironment>()
+//    , provider.GetRequiredService<IRabbitMqService>()
+//    , new List<string> {
+//        CommonConst.AUTONSI_QUEUE_MACHINE
+//        , CommonConst.AUTONSI_QUEUE_MENU
+//        , CommonConst.AUTONSI_QUEUE_MENU_PERMISSION
+//        , CommonConst.AUTONSI_QUEUE_DOCUMENT
+//    }
+//    // , provider.GetRequiredService<ESD_DBContext>()
+//    // , provider.GetRequiredService<ISqlDataAccess>()
+//));
 
 builder.Services.AddSingleton<ICache, RedisCache>();
 
