@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NewPrjESDEDIBE.Models.Dtos.Common
 {
-    [JSGenerateAttribute]
+    [JSGenerateAttribute] // cho phép mở rộng thuộc tính
     public class LoginModelDto
     {
         [Required]

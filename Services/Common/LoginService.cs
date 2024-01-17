@@ -23,12 +23,12 @@ namespace NewPrjESDEDIBE.Services.Common
             _sqlDataAccess = sqlDataAccess;
         }
 
-        public async Task<string> CheckLogin(LoginModelDto model)
+        public async Task<string> CheckLogin(LoginModelDto model) //từ FE nhập user pw truyền vào model, ở controller sẽ load từ model ra rồi truyền vào db để query theo store
         {
 
             model.userPassword = MD5Encryptor.MD5Hash(model.userPassword);
 
-            string proc = "sysUsp_User_CheckLogin";
+            string proc = "sysUsp_User_CheckLogin"; // gọi store ra để truyền tham số vào
             var param = new DynamicParameters();
             param.Add("@userName", model.userName);
             param.Add("@userPassword", model.userPassword);
@@ -39,7 +39,7 @@ namespace NewPrjESDEDIBE.Services.Common
             return result;
         }
 
-        public async Task<ResponseModel<IEnumerable<UserDto>?>> GetOnlineUsers()
+        public async Task<ResponseModel<IEnumerable<UserDto>?>> GetOnlineUsers() //lấy danh sách user đang online để kt trạng thái
         {
             var returnData = new ResponseModel<IEnumerable<UserDto>?>();
             string proc = "sysUsp_User_GetOnlineUsers";
