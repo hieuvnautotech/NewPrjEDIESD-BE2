@@ -43,7 +43,7 @@ namespace NewPrjESDEDIBE.Controllers
         //, IMenuService menuService
         )
         {
-            _loginService = loginService;
+            _loginService = loginService; //kt trong db thông tin user, pw
             _userService = userService;
             _jwtService = jwtService;
             _refreshTokenService = refreshTokenService;
