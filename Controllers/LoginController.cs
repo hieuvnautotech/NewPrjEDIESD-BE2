@@ -11,6 +11,10 @@ using NewPrjESDEDIBE.Services.Cache;
 using NewPrjESDEDIBE.Services.Common;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
+using Nest;
+using static System.Net.WebRequestMethods;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 
 namespace NewPrjESDEDIBE.Controllers
 {
@@ -129,6 +133,38 @@ namespace NewPrjESDEDIBE.Controllers
 
             return Ok(returnData);
         }
+        //Nó kiểm tra điều kiện đăng nhập bằng cách sử dụng _loginService.CheckLogin(loginModel)
+        //và lưu kết quả vào biến kết quả.
+
+        //Nó tạo ra một ResponseModel<AuthorizationResponse> có tên returnData để giữ dữ liệu phản hồi.
+
+        //Nó sử dụng câu lệnh switch để xử lý các trường hợp khác nhau dựa trên kết quả đăng nhập (result).
+
+
+        //Trong trường hợp đăng nhập thành công (StaticReturnValue.SUCCESS), nó sẽ truy xuất thông tin
+        //người dùng, tạo mã thông báo truy cập và mã thông báo làm mới, đồng thời lưu trữ chúng trong
+        //cơ sở dữ liệu bằng cách sử dụng _refreshTokenService.Create(userRefreshTokenModel).
+
+
+        //Nếu quá trình tạo và lưu trữ mã thông báo thành công, nó sẽ cập nhật Redis bằng các mã thông
+        //báo có sẵn, đặt mã thông báo làm mới trong dữ liệu người dùng, cập nhật thời gian đăng nhập
+        //cuối cùng của người dùng và đặt dữ liệu phản hồi trong returnData.
+        //Nếu đăng nhập không thành công do thông tin đăng nhập không hợp lệ hoặc tài khoản bị chặn,
+        //nó sẽ đặt mã trạng thái HTTP thích hợp trong returnData.
+
+        //Nếu đăng nhập không thành công vì một lý do không xác định, nó sẽ gây ra lỗi máy chủ nội
+        //bộ trong returnData.
+
+        //Cuối cùng, nó trả về một phản hồi Ok với returnData đã được điền sẵn.
+
+        //Lưu ý: Hành vi thực tế và tiêu chí thành công có thể phụ thuộc vào chi tiết triển khai của
+        //các dịch vụ và phương thức được gọi trong phương thức này.
+
+
+
+
+
+
 
         private async Task SetLastLogin(UserDto userDto, bool? isOnApp)
         {
