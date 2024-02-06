@@ -9,6 +9,10 @@ using NewPrjESDEDIBE.Models.Dtos;
 using FluentValidation.TestHelper;
 using NewPrjESDEDIBE.Models.Dtos.Redis;
 using NewPrjESDEDIBE.Cache;
+using Microsoft.Extensions.Hosting;
+using Nest;
+using NewPrjESDEDIBE.Services.EDI;
+using System.Runtime.InteropServices;
 //using NewPrjESDEDIBE.Models.Redis;
 
 namespace NewPrjESDEDIBE.Services.Cache
@@ -119,6 +123,21 @@ namespace NewPrjESDEDIBE.Services.Cache
             _refreshTokenService = refreshTokenService;
             _roleService = roleService;
         }
+
+        //Đoạn mã trên là khai báo một public constructor cho lớp SysCacheService.
+        //Constructor này nhận các tham số sau:
+
+        //cache: Một đối tượng implement từ giao diện ICache.Dịch vụ này có thể được sử dụng để
+        //lưu trữ và truy xuất các mục dữ liệu trong bộ nhớ cache.
+        //refreshTokenService: Một đối tượng implement từ giao diện IRefreshTokenService.
+        //Dịch vụ này có thể được sử dụng để thực hiện các hoạt động liên quan đến refresh token,
+        //thường được sử dụng trong các ứng dụng xác thực hoặc quản lý phiên làm việc của người dùng.
+        //roleService: Một đối tượng implement từ giao diện IRoleService. Dịch vụ này có thể
+        //được sử dụng để thực hiện các hoạt động liên quan đến quản lý vai trò của người dùng,
+        //chẳng hạn như xác định vai trò của người dùng trong hệ thống.
+
+        //Có vẻ như các tham số loginService và policyService đã được bình luận bằng cách
+        //sử dụng dấu //, có thể đã được loại bỏ hoặc được chuyển sang một vị trí khác trong mã nguồn.
 
         public bool Del(string key)
         {

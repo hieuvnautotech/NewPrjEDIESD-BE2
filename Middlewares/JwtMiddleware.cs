@@ -1,4 +1,5 @@
-﻿using NewPrjESDEDIBE.Services.Common;
+﻿using Microsoft.AspNetCore.Http;
+using NewPrjESDEDIBE.Services.Common;
 
 namespace NewPrjESDEDIBE.Middlewares
 {
@@ -10,6 +11,18 @@ namespace NewPrjESDEDIBE.Middlewares
         {
             _next = next;
         }
+
+        //Đoạn mã trên là khai báo một middleware trong ASP.NET Core được sử dụng để xử lý
+        //các yêu cầu liên quan đến JWT (JSON Web Tokens). Middleware này nhận một tham số
+        //là RequestDelegate next, đại diện cho hàm middleware tiếp theo trong pipeline xử lý yêu cầu HTTP.
+
+        //Middleware này có thể được sử dụng để thực hiện các công việc như xác thực và xác
+        //định người dùng từ JWT trong yêu cầu HTTP, cũng như các nhiệm vụ khác liên quan đến
+        //bảo mật và quản lý phiên.
+
+        //Tuy nhiên, mã bạn cung cấp chỉ là constructor của middleware, không phải là một lớp
+        //hoàn chỉnh.Để viết một middleware hoàn chỉnh, bạn cần thực hiện các bước xử lý trong
+        //phương thức InvokeAsync của middleware.
 
         public async Task Invoke(HttpContext context, IJwtService _jwtService)
         {
