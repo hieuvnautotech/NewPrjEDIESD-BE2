@@ -9,6 +9,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using NewPrjESDEDIBE.Models;
 using Microsoft.EntityFrameworkCore;
 using NewPrjESDEDIBE.Extensions;
+using Microsoft.Extensions.Hosting;
+using NewPrjESDEDIBE.Cache;
+using Newtonsoft.Json.Linq;
+using static Nest.JoinField;
+using System.Runtime.InteropServices;
 
 namespace NewPrjESDEDIBE.Hubs
 {
@@ -34,6 +39,27 @@ namespace NewPrjESDEDIBE.Hubs
             _jwtService = jwtService;
             _userService = userService;
         }
+
+        //Mã bạn cung cấp định nghĩa một SignalR Hub, một phần của ứng dụng thường được sử
+        //dụng để thực hiện giao tiếp real-time giữa máy khách (client) và máy chủ (server)
+        //thông qua các kết nối WebSocket hoặc các kỹ thuật khác.
+
+        //Constructor của SignalRHub nhận các tham chiếu đến các dịch vụ khác nhau:
+
+        //ISysCacheService sysCacheService: Đây là một dịch vụ được sử dụng để thực hiện các hoạt
+        //động liên quan đến bộ nhớ cache(cache service). Có vẻ như SignalRHub có nhu cầu sử dụng
+        //dịch vụ này để lưu trữ và truy xuất dữ liệu từ bộ nhớ cache trong quá trình xử lý các kết nối SignalR.
+
+        //IJwtService jwtService: Đây là một dịch vụ liên quan đến xác thực và quản lý JWT(JSON Web Tokens).
+        //Có vẻ như SignalRHub sử dụng dịch vụ này để xác thực và quản lý phiên của người dùng thông qua JWT.
+
+        //IUserService userService: Đây là một dịch vụ liên quan đến quản lý người dùng trong hệ thống.
+        //SignalRHub có thể sử dụng dịch vụ này để thực hiện các hoạt động liên quan đến quản lý người dùng,
+        //như kiểm tra quyền truy cập hoặc thao tác với thông tin người dùng.
+
+        //Constructor này được sử dụng để tiêm các tham chiếu đến các dịch vụ này vào SignalRHub,
+        //để nó có thể sử dụng chúng trong quá trình xử lý các kết nối SignalR và thực hiện các chức năng
+        //liên quan đến xác thực, quản lý phiên và quản lý người dùng.
 
         public async Task SendMessage(string message)
         {

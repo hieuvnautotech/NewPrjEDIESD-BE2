@@ -10,6 +10,8 @@ using System.Data;
 using System.Numerics;
 using static NewPrjESDEDIBE.Extensions.ServiceExtensions;
 using NewPrjESDEDIBE.Models.Dtos.Redis;
+using NewPrjESDEDIBE.Cache;
+using System.Runtime.InteropServices;
 
 namespace NewPrjESDEDIBE.Services.Common
 {
@@ -52,6 +54,20 @@ namespace NewPrjESDEDIBE.Services.Common
             _sqlDataAccess = sqlDataAccess;
             _sysCacheService = sysCacheService;
         }
+
+        //Mã bạn cung cấp định nghĩa một dịch vụ khác được gọi là UserService.Constructor
+        //của UserService nhận hai tham chiếu đến các dịch vụ khác nhau:
+
+        //ISqlDataAccess sqlDataAccess: Đây là một interface hoặc một loại dịch vụ được sử
+        //dụng để thực hiện các hoạt động liên quan đến truy cập cơ sở dữ liệu(SQL data access).
+        //Dịch vụ này có thể được sử dụng để thực hiện các truy vấn SQL và tương tác với cơ sở dữ liệu.
+        //ISysCacheService sysCacheService: Đây là một interface hoặc một loại dịch vụ được sử
+        //dụng để thực hiện các hoạt động liên quan đến bộ nhớ cache(cache service). Dịch vụ này
+        //có thể được sử dụng để lưu trữ và truy xuất dữ liệu từ bộ nhớ cache.
+
+        //Constructor của UserService được sử dụng để tiêm các tham chiếu đến các dịch vụ này vào
+        //trong UserService, để dịch vụ này có thể sử dụng chúng để thực hiện các chức năng của mình
+        //liên quan đến truy cập cơ sở dữ liệu và quản lý bộ nhớ cache.
 
         public async Task<string> ChangeUserPassword(UserDto model)
         {

@@ -23,6 +23,14 @@ namespace NewPrjESDEDIBE.Services.Common
             _sqlDataAccess = sqlDataAccess;
         }
 
+        //Mã bạn cung cấp định nghĩa một dịch vụ (service) khác, được gọi là LoginService.
+        //Constructor của LoginService nhận một tham chiếu đến một đối tượng cung cấp truy
+        //cập cơ sở dữ liệu (SQL data access) thông qua giao diện ISqlDataAccess.
+
+        //Có vẻ như LoginService được thiết kế để thực hiện các chức năng liên quan đến
+        //quản lý và xử lý việc đăng nhập trong ứng dụng.Bằng cách chuyển vào một đối tượng
+        //ISqlDataAccess, dịch vụ này có thể tương tác với cơ sở dữ liệu để xác thực thông tin
+        //đăng nhập và thực hiện các tác vụ liên quan đến quản lý tài khoản người dùng.
         public async Task<string> CheckLogin(LoginModelDto model) //từ FE nhập user pw truyền vào model, ở controller sẽ load từ model ra rồi truyền vào db để query theo store
         {
 

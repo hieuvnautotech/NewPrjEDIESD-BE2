@@ -11,6 +11,9 @@ using static NewPrjESDEDIBE.Extensions.ServiceExtensions;
 using NewPrjESDEDIBE.Services.Cache;
 using Newtonsoft.Json.Linq;
 using NewPrjESDEDIBE.Extensions;
+using Microsoft.Extensions.Hosting;
+using NewPrjESDEDIBE.Cache;
+using System.Runtime.InteropServices;
 
 namespace NewPrjESDEDIBE.Services.Common
 {
@@ -45,6 +48,19 @@ namespace NewPrjESDEDIBE.Services.Common
             _sysCacheService = sysCacheService;
             _sqlDataAccess = sqlDataAccess;
         }
+
+        //Mã bạn đã cung cấp là một phần của một dịch vụ (service) trong một ứng dụng.
+        //Dịch vụ này có tên là JwtService và có ba tham số được chuyển vào trong constructor của nó:
+
+        //ISysCacheService sysCacheService: Đây là một interface hoặc một loại dịch vụ được định nghĩa
+        //trong ứng dụng để thực hiện các hoạt động liên quan đến bộ nhớ cache(cache service). Dịch vụ
+        //này có thể được sử dụng để lưu trữ và truy xuất dữ liệu từ bộ nhớ cache.
+        //ISqlDataAccess sqlDataAccess: Đây cũng là một interface hoặc một loại dịch vụ được định nghĩa
+        //trong ứng dụng để thực hiện các hoạt động liên quan đến truy cập cơ sở dữ liệu(SQL data access).
+        //Dịch vụ này có thể được sử dụng để thực hiện các truy vấn SQL và tương tác với cơ sở dữ liệu.
+
+        //Constructor này dường như được sử dụng để tiêm các tham chiếu đến các dịch vụ này vào JwtService,
+        //để nó có thể sử dụng chúng trong việc thực hiện các chức năng của mình.
 
         public async Task<AuthorizationResponse> GetTokenAsync(UserDto model)
         {
