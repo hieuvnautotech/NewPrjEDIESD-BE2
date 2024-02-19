@@ -31,21 +31,21 @@ namespace NewPrjESDEDIBE.Services.Common
         //quản lý và xử lý việc đăng nhập trong ứng dụng.Bằng cách chuyển vào một đối tượng
         //ISqlDataAccess, dịch vụ này có thể tương tác với cơ sở dữ liệu để xác thực thông tin
         //đăng nhập và thực hiện các tác vụ liên quan đến quản lý tài khoản người dùng.
-        //public async Task<string> CheckLogin(LoginModelDto model) //từ FE nhập user pw truyền vào model, ở controller sẽ load từ model ra rồi truyền vào db để query theo store
-        //{
+        public async Task<string> CheckLogin(LoginModelDto model) //từ FE nhập user pw truyền vào model, ở controller sẽ load từ model ra rồi truyền vào db để query theo store
+        {
 
-        //    model.userPassword = MD5Encryptor.MD5Hash(model.userPassword);
+            model.userPassword = MD5Encryptor.MD5Hash(model.userPassword);
 
-        //    string proc = "sysUsp_User_CheckLogin"; // gọi store ra để truyền tham số vào
-        //    var param = new DynamicParameters();
-        //    param.Add("@userName", model.userName);
-        //    param.Add("@userPassword", model.userPassword);
-        //    param.Add("@output", dbType: DbType.String, direction: ParameterDirection.Output, size: int.MaxValue);//luôn để DataOutput trong stored procedure
+            string proc = "sysUsp_User_CheckLogin"; // gọi store ra để truyền tham số vào
+            var param = new DynamicParameters();
+            param.Add("@userName", model.userName);
+            param.Add("@userPassword", model.userPassword);
+            param.Add("@output", dbType: DbType.String, direction: ParameterDirection.Output, size: int.MaxValue);//luôn để DataOutput trong stored procedure
 
-        //    await _sqlDataAccess.LoadDataUsingStoredProcedure<string>(proc, param);
-        //    string result = param.Get<string?>("@output") ?? string.Empty;
-        //    return result;
-        //}
+            await _sqlDataAccess.LoadDataUsingStoredProcedure<string>(proc, param);
+            string result = param.Get<string?>("@output") ?? string.Empty;
+            return result;
+        }
 
         public async Task<ResponseModel<IEnumerable<UserDto>?>> GetOnlineUsers() //lấy danh sách user đang online để kt trạng thái
         {
